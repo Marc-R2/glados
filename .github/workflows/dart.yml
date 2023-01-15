@@ -5,7 +5,6 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    working-directory: glados
 
     steps:
       - uses: actions/checkout@v3
@@ -16,25 +15,31 @@ jobs:
 
       - name: Install dependencies
         run: dart pub get
+        working-directory: glados
 
       - name: Analyze project source
         run: dart analyze
+        working-directory: glados
 
       - name: Get test files
         run: tests=$(find test -name "*_test.dart")
         shell: bash
         id: test_files
+        working-directory: glados
 
       - name: Run tests
         run: dart pub run test ${{ steps.test_files.outputs.tests }}
         shell: bash
+        working-directory: glados
 
       - name: Coverage information
+        working-directory: glados
         run: |
           dart pub global activate coverage
           dart pub global run coverage:test_with_coverage
 
       - name: Upload coverage to Codecov
+        working-directory: glados
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
