@@ -14,27 +14,23 @@ jobs:
           sdk: "2.19.0-146.2.beta"
 
       - name: Install dependencies
-        run: dart pub get
-        working-directory: glados
+        run: cd glados && dart pub get
 
       - name: Analyze project source
-        run: dart analyze
-        working-directory: glados
+        run: cd glados && dart analyze
 
       - name: Get test files
-        run: tests=$(find test -name "*_test.dart")
+        run: cd glados && tests=$(find test -name "*_test.dart")
         shell: bash
         id: test_files
-        working-directory: glados
 
       - name: Run tests
-        run: dart pub run test ${{ steps.test_files.outputs.tests }}
+        run: cd glados && dart pub run test ${{ steps.test_files.outputs.tests }}
         shell: bash
-        working-directory: glados
 
       - name: Coverage information
-        working-directory: glados
         run: |
+          cd glados &&
           dart pub global activate coverage
           dart pub global run coverage:test_with_coverage
 
@@ -42,5 +38,4 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/lcov.info
-        working-directory: glados
+          files: ./glados/coverage/lcov.info
