@@ -1,20 +1,20 @@
-import 'dart:async';
-import 'dart:math';
+part of '../glados.dart';
 
 /// A function with one input that's intended to be called in a test context.
 typedef Tester<T> = FutureOr<void> Function(T input);
-typedef TesterWithRandom<T> = FutureOr<void> Function(T input, Random random);
+typedef TesterWithRandom<T> = FutureOr<void> Function(
+    T input, math.Random random);
 
 /// A function with two inputs that's intended to be called in a test context.
 typedef Tester2<A, B> = FutureOr<void> Function(A firstInput, B secondInput);
 typedef Tester2WithRandom<A, B> = FutureOr<void> Function(
-    A firstInput, B secondInput, Random random);
+    A firstInput, B secondInput, math.Random random);
 
 /// A function with three inputs that's intended to be called in a test context.
 typedef Tester3<A, B, C> = FutureOr<void> Function(
     A firstInput, B secondInput, C thirdInput);
 typedef Tester3WithRandom<A, B, C> = FutureOr<void> Function(
-    A firstInput, B secondInput, C thirdInput, Random random);
+    A firstInput, B secondInput, C thirdInput, math.Random random);
 
 /// A simple class storing statistics.
 class Statistics {
@@ -22,8 +22,9 @@ class Statistics {
   var shrinkCounter = 0;
 }
 
-extension RandomUtils on Random {
+extension RandomUtils on math.Random {
   T choose<T>(List<T> list) => list[nextInt(list.length)];
+
   int nextIntInRange(int min, int max) {
     assert(min < max);
     return _nextIntUpTo(max - min) + min;
@@ -42,7 +43,7 @@ extension RandomUtils on Random {
     }
   }
 
-  Random nextRandom() => Random(nextInt(1234567890));
+  math.Random nextRandom() => math.Random(nextInt(1234567890));
 }
 
 /// Runs the [tester] with the [input]. Catches thrown errors and instead
@@ -62,5 +63,6 @@ extension CamelCasing on String {
 
 extension JoinableStrings on List<String> {
   String joinLines() => join('\n');
+
   String joinParts() => join('\n\n');
 }

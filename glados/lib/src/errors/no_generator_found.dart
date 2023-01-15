@@ -1,10 +1,4 @@
-import 'package:glados/src/packages.dart';
-
-import 'rich_type.dart';
-import 'structured_text.dart';
-import 'utils.dart';
-
-class InternalNoGeneratorFound implements Exception {}
+part of '../../glados.dart';
 
 /// Indicates that no arbitrary was found for a type.
 class NoGeneratorFound implements Exception {
@@ -45,7 +39,7 @@ class NoGeneratorFound implements Exception {
         BulletList([
           for (final typeName in richType.allTypes())
             Flow([
-              Paragraph.noNl('any.${typeName.toLowerCamelCase()}:'),
+              Paragraph.noNl('anys.${typeName.toLowerCamelCase()}:'),
               ..._helpForSimpleType(typeName),
               Paragraph(),
             ]),
@@ -103,25 +97,5 @@ class NoGeneratorFound implements Exception {
         ]),
       ]);
     }
-  }
-}
-
-/// For the same input, a property test sometimes throws an exceptions and
-/// sometimes doesn't. Property tests should be deterministic though.
-class PropertyTestNotDeterministic implements Exception {
-  PropertyTestNotDeterministic(this.input, this.output);
-
-  final dynamic input;
-  final dynamic output;
-
-  @override
-  String toString() {
-    return Flow([
-      Paragraph('A property test behaved undeterministically. For the input '
-          '$input, it failed the first time, but succeeded the second time '
-          'with output $output.'),
-      Paragraph('Make sure that if given the same input, the property test '
-          'always behaves the same way.'),
-    ]).toString();
   }
 }

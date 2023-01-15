@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:glados/glados.dart';
 
 void main() {

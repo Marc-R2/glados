@@ -1,4 +1,4 @@
-import 'utils.dart';
+part of '../../glados.dart';
 
 /// While you shouldn't rely on [Type.toString()] to return something useful, we
 /// depend on it _only_ for better developer experience.
@@ -25,12 +25,12 @@ class RichType {
   @override
   bool operator ==(Object other) =>
       other is RichType &&
-      name == other.name &&
-      children.length == other.children.length &&
-      [
-        for (var i = 0; i < children.length; i++)
-          children[i] == other.children[i],
-      ].every((it) => it);
+          name == other.name &&
+          children.length == other.children.length &&
+          [
+            for (var i = 0; i < children.length; i++)
+              children[i] == other.children[i],
+          ].every((it) => it);
   @override
   int get hashCode => children
       .map((child) => child.hashCode)
@@ -46,7 +46,7 @@ class RichType {
   }
 
   String toGeneratorString() {
-    final string = StringBuffer('any.${name.toLowerCamelCase()}');
+    final string = StringBuffer('anys.${name.toLowerCamelCase()}');
     if (children.isNotEmpty) {
       string
         ..write('(')
@@ -54,40 +54,5 @@ class RichType {
         ..write(')');
     }
     return string.toString();
-  }
-}
-
-class _TypeParser {
-  _TypeParser(this.string);
-
-  final String string;
-  int cursor = 0;
-
-  String get current => cursor < string.length ? string[cursor] : '';
-  void advance() => cursor++;
-  bool get isDone => cursor == string.length;
-
-  RichType parse() {
-    var name = StringBuffer();
-    var types = <RichType>[];
-    while (!['<', '>', ',', ''].contains(current)) {
-      name.write(current);
-      advance();
-    }
-    if (name.isEmpty) throw FormatException("Type '$string' has no name");
-    if (current == '>' || current == ',') {
-      return RichType(name.toString());
-    }
-    if (current == '<') {
-      while (current == '<' || current == ',') {
-        advance();
-        types.add(parse());
-      }
-      if (current != '>') {
-        throw FormatException("'>' expected in '$string' at position $current");
-      }
-      advance();
-    }
-    return RichType(name.toString(), types);
   }
 }

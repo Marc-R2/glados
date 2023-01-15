@@ -241,7 +241,7 @@ Here's how to set a generator as the default generator for a type:
 ```dart
 Any.setDefault<String>(any.emailAddress);
 
-// Uses the any.emailAddress generator based on the type parameters.
+// Uses the anys.emailAddress generator based on the type parameters.
 Glados<String>().test('blub', (email) { ... });
 ```
 

@@ -1,5 +1,4 @@
 import 'package:glados/glados.dart';
-import 'package:glados/src/utils.dart';
 
 void main() {
   group('RandomUtils', () {

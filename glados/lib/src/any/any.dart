@@ -1,13 +1,9 @@
-import 'dart:math';
-
-import 'anys.dart';
-import 'errors.dart';
-import 'generator.dart';
+part of '../../glados.dart';
 
 /// The [any] singleton, providing a namespace for [Generator]s.
 ///
 /// New [Generator]s should be added as extension methods, so you can use them
-/// with a syntax like this: `any.int`
+/// with a syntax like this: `anys.int`
 final any = Any();
 
 /// A namespace for all [Generator]s.
@@ -43,19 +39,14 @@ class Any {
   }
 }
 
-class _TypeWrapper<T> {
-  @override
-  bool operator ==(Object other) => other.runtimeType == runtimeType;
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
+
 
 /// Useful utilities for creating [Geneator]s that behave just like you want to.
 extension AnyUtils on Any {
   /// Creates a new, simple [Generator] that produces values and knows how to
   /// simplify them.
   Generator<T> simple<T>({
-    required T Function(Random random, int size) generate,
+    required T Function(math.Random random, int size) generate,
     required Iterable<T> Function(T input) shrink,
   }) {
     // Map both given functions to the semantics of generators: Instead of
@@ -83,7 +74,7 @@ extension AnyUtils on Any {
   /// list are considered less complex.
   Generator<T> choose<T>(List<T> values) {
     assert(values.toSet().length == values.length,
-        'The list of values given to any.choice contains duplicate items.');
+        'The list of values given to anys.choice contains duplicate items.');
     return simple(
       generate: (random, size) => values[random.nextInt(
         size.clamp(0, values.length),

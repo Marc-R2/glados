@@ -2,10 +2,7 @@ import 'dart:core' as core;
 import 'dart:math' as math;
 
 import 'package:characters/characters.dart';
-
-import 'any.dart';
-import 'generator.dart';
-import 'utils.dart';
+import 'package:glados/glados.dart';
 
 extension NullAny on Any {
   /// A generator that only generates [null].
@@ -174,10 +171,10 @@ extension ListAnys on Any {
   /// A generator that returns [List]s with a `length` between [min], inclusive,
   /// and [max], exclusive.
   Generator<core.List<T>> listWithLengthInRange<T>(
-    core.int? min,
-    core.int? max,
-    Generator<T> item,
-  ) {
+      core.int? min,
+      core.int? max,
+      Generator<T> item,
+      ) {
     final actualMin = min ?? 0;
     assert(actualMin >= 0);
     return (random, size) {
@@ -194,9 +191,9 @@ extension ListAnys on Any {
 
   /// A generator that returns [List]s with the given `length`.
   Generator<core.List<T>> listWithLength<T>(
-    core.int length,
-    Generator<T> item,
-  ) {
+      core.int length,
+      Generator<T> item,
+      ) {
     return listWithLengthInRange(length, length + 1, item);
   }
 
@@ -246,10 +243,10 @@ extension SetAyns on Any {
       "It's not possible to reliably generate sets with a given length. For "
       'example, any.setWithLengthInRange(3, 10, any.bool) is impossible.')
   Generator<core.Set<T>> setWithLengthInRange<T>(
-    core.int? min,
-    core.int? max,
-    Generator<T> item,
-  ) {
+      core.int? min,
+      core.int? max,
+      Generator<T> item,
+      ) {
     final actualMin = min ?? 0;
     assert(actualMin >= 0);
     return (random, size) {
@@ -358,9 +355,9 @@ extension DurationAnys on Any {
 extension MapAnys on Any {
   /// A generator that returns [MapEntry]s.
   Generator<core.MapEntry<K, V>> mapEntry<K, V>(
-    Generator<K> key,
-    Generator<V> value,
-  ) {
+      Generator<K> key,
+      Generator<V> value,
+      ) {
     return combine2(key, value, (K key, V value) => core.MapEntry(key, value));
   }
 

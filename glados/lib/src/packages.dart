@@ -1,3 +1,5 @@
+part of '../glados.dart';
+
 class Package {
   Package(this.name, [String? gladosName])
       : gladosName = gladosName ?? '${name}_glados';
