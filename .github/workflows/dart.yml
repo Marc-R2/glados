@@ -5,12 +5,10 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    working-directory: glados
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Check out code
-        run: cd glados
 
       - uses: dart-lang/setup-dart@v1.3
         with:
